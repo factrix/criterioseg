@@ -57,5 +57,12 @@ class UserController extends Controller
             return redirect()->intended('dashboard');
 
         }
+
+        return "Error email o password";
+    }
+
+    public function logout(){
+        auth()->logout();
+        return redirect()->route('login');
     }
 }
