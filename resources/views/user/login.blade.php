@@ -6,6 +6,9 @@
     <div class="row justify-content-center">
        
         <div class="col-md-8">
+            @if(Session::has('successMessage'))
+                <div class="alert alert-success">{{Session::get('successMessage')}}</div>
+            @endif
            <div class="card shadow-lg">
                 <div class="card-header"> Login</div>
                     <form action="{{route('login.post')}}" method="post">@csrf

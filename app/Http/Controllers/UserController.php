@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegistrationFormRequest;
 use Illuminate\Http\Request; 
 //declarar el modelo que se requiere usar
 use App\Models\User;
@@ -11,9 +12,18 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     const JOB_SEEKER='seeker';
+    const JOB_POSTER='employer';
+
+
+
     public function createSeeker(){
 
         return(view('user.seeker-register'));
+    }
+
+    public function createEmployer(){
+
+        return(view('user.employer-register'));
     }
 
  
@@ -37,8 +47,25 @@ class UserController extends Controller
             'user_type' => self::JOB_SEEKER
 
         ]);
-        return back();
+
+        return redirect()->route('login')->with('successMessage', 'Tu cuenta fue creada ');
     }
+
+    public function storeEmployer(RegistrationFormRequest $request){
+ 
+        User::create([
+            'name' => request('name'),
+            'username' => request('name'),
+            'email' => request('email'),
+            'password' => bcrypt(request ('password')),
+            'status' => "activo",
+            'about' => "",          
+            'user_type' => self::JOB_POSTER
+
+        ]);
+        return redirect()->route('login')->with('successMessage', 'Tu cuenta fue creada ');
+    }
+
 
     public function login(){
 
